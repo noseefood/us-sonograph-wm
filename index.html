@@ -1,738 +1,306 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-  <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="Speckle2Self: a self-supervised algorithm for ultrasound speckle reduction using only single noisy observations. Medical Image Analysis, 2025.">
-  <meta property="og:title" content="Speckle2Self: Self-Supervised Ultrasound Speckle Reduction Without Clean Data"/>
-  <meta property="og:description" content="A self-supervised algorithm for ultrasound speckle reduction using only single noisy observations. Medical Image Analysis, 2025."/>
-  <meta property="og:url" content="https://noseefood.github.io/us-speckle2self/"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="https://noseefood.github.io/us-speckle2self/static/images/CCA_visual.png" />
-  <meta property="og:image:width" content="3598"/>
-  <meta property="og:image:height" content="1168"/>
-
-
-  <meta name="twitter:title" content="Speckle2Self: Self-Supervised Ultrasound Speckle Reduction Without Clean Data">
-  <meta name="twitter:description" content="A self-supervised algorithm for ultrasound speckle reduction using only single noisy observations. Medical Image Analysis, 2025.">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="https://noseefood.github.io/us-speckle2self/static/images/CCA_visual.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="Ultrasound imaging, Medical image analysis, AI for medicine, Medical image denoising, Speckle reduction">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <title>Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation</title>
+  <meta name="description" content="SonoGraph-WM: an action- and goal-conditioned scene-graph world model that imagines future anatomy to plan robotic ultrasound probe navigation.">
+  <meta name="keywords" content="Robotic ultrasound, World model, Scene graph, Probe navigation, Medical robotics">
 
-  <title>Speckle2Self: Self-Supervised Ultrasound Speckle Reduction Without Clean Data</title>
+  <meta property="og:title" content="Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation">
+  <meta property="og:description" content="SonoGraph-WM imagines future anatomy as scene graphs to plan robotic ultrasound probe navigation.">
+  <meta property="og:url" content="https://noseefood.github.io/us-sonograph-wm/">
+  <meta property="og:image" content="https://noseefood.github.io/us-sonograph-wm/static/images/sonograph_preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="675">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation">
+  <meta name="twitter:description" content="SonoGraph-WM imagines future anatomy as scene graphs to plan robotic ultrasound probe navigation.">
+  <meta name="twitter:image" content="https://noseefood.github.io/us-sonograph-wm/static/images/sonograph_preview.jpg">
+
   <link rel="icon" type="image/x-icon" href="static/images/ultrasound_icon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-  rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/anim/pptanim.css">
   <link rel="stylesheet" href="static/css/index.css">
-  <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css"> 
 
-  <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
-  <script src="static/js/copybutton.js"></script>
+  <script defer src="static/anim/pptanim.js"></script>
+  <script defer src="static/js/copybutton.js"></script>
 </head>
 <body>
 
-  <section class="hero publication-hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop has-text-centered">
-        <p class="publication-venue">Medical Image Analysis &middot; 2025</p>
-        <h1 class="title is-1 publication-title">Speckle2Self: Self-Supervised Ultrasound Speckle Reduction Without Clean Data</h1>
+<!-- ============ Hero ============ -->
+<section class="hero publication-hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <p class="publication-venue">Under Review</p>
+      <h1 class="title is-1 publication-title">Scanning While Imagining:<br>A Scene-Graph World Model for Robotic Ultrasound Navigation</h1>
 
-        <div class="publication-authors">
-          <span class="author-block"><a href="https://www.linkedin.com/in/xuesong-li-robo/" target="_blank">Xuesong Li</a><sup>a,b</sup>,</span>
-          <span class="author-block"><a href="https://www.professoren.tum.de/navab-nassir" target="_blank">Nassir Navab</a><sup>a,b</sup>,</span>
-          <span class="author-block">and <a href="https://www.cs.cit.tum.de/camp/members/zhongliang-jiang/" target="_blank">Zhongliang Jiang</a><sup>a,b,*</sup></span>
-        </div>
+      <div class="publication-authors">
+        <span class="author-block"><a href="https://www.linkedin.com/in/xuesong-li-robo/" target="_blank">Xuesong Li</a><sup>a,b</sup>,</span>
+        <span class="author-block">Shuai Chen<sup>a</sup>,</span>
+        <span class="author-block"><a href="https://www.cs.cit.tum.de/camp/members/feng-li/" target="_blank">Feng Li</a><sup>a,b</sup>,</span>
+        <span class="author-block"><a href="https://mech.hku.hk/academic-staff/jiang-z-l/" target="_blank">Zhongliang Jiang</a><sup>c</sup>,</span>
+        <span class="author-block"><a href="https://www.professoren.tum.de/navab-nassir" target="_blank">Nassir Navab</a><sup>a,b</sup>,</span>
+        <span class="author-block">and <a href="https://www.cs.cit.tum.de/camp/members/yuan-bi/" target="_blank">Yuan Bi</a><sup>a,b</sup></span>
+      </div>
 
-        <div class="publication-affiliations">
-          <span class="affiliation-block"><sup>a</sup>Computer Aided Medical Procedures (CAMP), Technical University of Munich, Munich, Germany</span>
-          <span class="affiliation-block"><sup>b</sup>Munich Center for Machine Learning (MCML), Munich, Germany</span>
-          <span class="affiliation-block corresponding-note"><sup>*</sup>Corresponding Author</span>
-        </div>
+      <div class="publication-affiliations">
+        <span class="affiliation-block"><sup>a</sup>Computer Aided Medical Procedures (CAMP), Technical University of Munich, Germany</span>
+        <span class="affiliation-block"><sup>b</sup>Munich Center for Machine Learning (MCML), Germany</span>
+        <span class="affiliation-block"><sup>c</sup>Department of Mechanical Engineering, The University of Hong Kong, Hong Kong SAR, China</span>
+      </div>
 
-        <div class="publication-links">
-          <!-- Arxiv PDF link -->
-          <!-- <span class="link-block">
-            <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
-            class="external-link button is-normal is-rounded is-dark"> -->
-          <span class="link-block">
-            <a href="https://www.sciencedirect.com/science/article/pii/S1361841525003020" target="_blank"
-            class="external-link button is-normal is-rounded is-dark">
-              <span class="icon"><i class="fas fa-file-pdf"></i></span>
-              <span>Paper</span>
-            </a>
+      <div class="publication-links">
+        <span class="link-block">
+          <span class="button is-normal is-rounded is-dark is-soon" title="Coming soon" aria-disabled="true">
+            <span class="icon"><i class="ai ai-arxiv"></i></span>
+            <span>arXiv (soon)</span>
           </span>
-
-          <!-- Supplementary PDF link -->
-          <!-- <span class="link-block">
-            <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-            class="external-link button is-normal is-rounded is-dark">
-            <span class="icon">
-              <i class="fas fa-file-pdf"></i>
-            </span>
-            <span>Supplementary</span>
+        </span>
+        <span class="link-block">
+          <span class="button is-normal is-rounded is-dark is-soon" title="Coming soon" aria-disabled="true">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code (soon)</span>
+          </span>
+        </span>
+        <span class="link-block">
+          <a href="#BibTeX" class="button is-normal is-rounded is-dark">
+            <span class="icon"><i class="ai ai-obp"></i></span>
+            <span>BibTeX</span>
           </a>
-          </span> -->
-
-          <!-- Github link -->
-          <span class="link-block">
-            <a href="https://github.com/noseefood/speckle2self" target="_blank"
-            class="external-link button is-normal is-rounded is-dark">
-              <span class="icon"><i class="fab fa-github"></i></span>
-              <span>Code</span>
-            </a>
-          </span>
-
-          <!-- ArXiv abstract Link -->
-          <span class="link-block">
-            <a href="https://arxiv.org/abs/2507.06828" target="_blank"
-            class="external-link button is-normal is-rounded is-dark">
-              <span class="icon"><i class="ai ai-arxiv"></i></span>
-              <span>arXiv</span>
-            </a>
-          </span>
-
-          <span class="link-block">
-            <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
-              <span class="icon"><i class="ai ai-obp"></i></span>
-              <span>BibTeX</span>
-            </a>
-          </span>
-        </div>
+        </span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
-<!-- Teaser image-->
+<!-- ============ Teaser animation ============ -->
 <section class="section teaser">
-  <div class="container is-max-desktop">
-    <figure class="paper-figure">
-      <div class="figure-scroll">
-        <a href="static/images/CCA_visual.png" target="_blank">
-          <img src="static/images/CCA_visual.png" alt="Comparison of despeckling results (In vivo dataset)">
-        </a>
-      </div>
-      <figcaption>Despeckling results and average homogeneity values on in vivo carotid dataset.</figcaption>
-    </figure>
-    <figure class="paper-figure">
-      <div class="figure-scroll">
-        <a href="static/images/Sim_visual.png" target="_blank">
-          <img src="static/images/Sim_visual.png" alt="Comparison of despeckling results (Synthetic dataset)">
-        </a>
-      </div>
-      <figcaption>Despeckling results and average SSIM values on Synthetic dataset.</figcaption>
-    </figure>
-    <p class="scroll-hint is-hidden-tablet">Swipe the figures sideways to see every method.</p>
-  </div>
-</section>
-<!-- End teaser image -->
-
-
-<!-- Paper abstract -->
-<section class="section section-alt" id="abstract">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Abstract</h2>
-    <div class="content abstract-text">
-      <p>
-          Image denoising is a fundamental task in computer vision, particularly in medical ultrasound (US) imaging, where speckle noise significantly degrades image quality. Although recent advancements in deep neural networks have led to substantial improvements in denoising for natural images, these methods cannot be directly applied to US speckle noise, as it is not purely random. Instead, US speckle arises from complex wave interference within the body microstructure, making it tissue-dependent. This dependency means that obtaining two independent noisy observations of the same scene, as required by pioneering Noise2Noise, is not feasible. Additionally, blind-spot networks also cannot handle US speckle noise due to its high spatial dependency. To address this challenge, we introduce Speckle2Self, a novel self-supervised algorithm for speckle reduction using only single noisy observations. The key insight is that applying a multi-scale perturbation (MSP) operation introduces tissue-dependent variations in the speckle pattern across different scales, while preserving the shared anatomical structure. This enables effective speckle suppression by modeling the clean image as a low-rank signal and isolating the sparse noise component. To demonstrate its effectiveness, Speckle2Self is comprehensively compared with conventional filter-based denoising algorithms and SOTA learning-based methods, using both realistic simulated US images and human carotid US images. Additionally, data from multiple US machines are employed to evaluate model generalization and adaptability to images from unseen domains.
-      </p>
-    </div>
-  </div>
-</section>
-<!-- End paper abstract -->
-
-<!-- Framework section -->
-<section class="section" id="framework">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Framework</h2>
-    <figure class="paper-figure">
-      <div class="figure-scroll">
-        <a href="static/images/network_overview_2.png" target="_blank">
-          <img src="static/images/network_overview_2.png" alt="Overview diagram">
-        </a>
+  <div class="container is-max-widescreen">
+    <figure class="anim-figure">
+      <div class="anim-card anim-wide">
+        <div class="ppt-anim" data-slides="slide01" data-crop="30,205,1220,430" data-speed="1.3" data-end-hold="5000"></div>
       </div>
       <figcaption>
-        Overview of the proposed despeckling framework. (a) Overall training process. (b) Inference using the trained despeckling model. The
-        network generates despeckled images directly from original US images.
+        A sonographer anticipates what the next view will show <em>before</em> moving the probe.
+        SonoGraph-WM gives the robot the same ability: a scene-graph world model imagines the anatomy that
+        candidate motions would reveal, and the robot selects, executes and replans.
       </figcaption>
     </figure>
   </div>
 </section>
 
-<!-- BEGIN: Method Comparison Slider -->
-<section class="section section-alt" id="method-comparison">
+
+<!-- ============ In a nutshell + abstract ============ -->
+<section class="section section-alt" id="abstract">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Compare Methods</h2>
-    <p class="section-lead">
-      Drag the slider to compare the results of different despeckling methods side by side. Use the frame slider to select different B-mode slices.
-    </p>
-
-    <div class="compare-card">
-      <div class="compare-controls">
-        <!-- 示例选择下拉框 -->
-        <div class="control-row">
-          <div class="select is-small is-rounded">
-            <select id="example-dropdown" aria-label="Dataset">
-              <option>Loading examples...</option>
-            </select>
-          </div>
-        </div>
-        <!-- 方法对比下拉框 -->
-        <div class="control-row method-pickers">
-          <div class="select is-small is-rounded">
-            <select id="juxtapose-method-left" aria-label="Left method"></select>
-          </div>
-          <span class="vs-label">vs</span>
-          <div class="select is-small is-rounded">
-            <select id="juxtapose-method-right" aria-label="Right method"></select>
-          </div>
-        </div>
-        <!-- B-plane 滑块选择 -->
-        <div class="control-row frame-picker">
-          <label for="frame-slider">B-Mode Frames</label>
-          <input id="frame-slider" class="slider is-small is-rounded" step="1" min="0" max="19" value="0" type="range">
-          <span id="frame-slider-value" class="frame-value">0</span>
-        </div>
-      </div>
-
-      <div id="juxtapose-slider-container"></div>
-
-      <p class="compare-hint">If the views become unsynchronized after switching methods, please switch to another frame to refresh.</p>
+    <h2 class="title is-3 section-title">In a Nutshell</h2>
+    <div class="content nutshell">
+      <p>
+        Ultrasound acquisition depends on anticipating how the view will change as the probe moves.
+        <strong>SonoGraph-WM</strong> is an action- and goal-conditioned world model that imagines those changes,
+        not as synthetic ultrasound images, but as <strong>anatomical scene graphs</strong>, and uses them to plan
+        where the probe should go next.
+      </p>
+      <ul class="highlights">
+        <li><strong>Anatomy, not texture.</strong> Scene graphs capture visible structures, their geometry and spatial relations, without synthesizing speckle.</li>
+        <li><strong>One model, two predictions.</strong> A unified Transformer jointly predicts future scene graphs and probe poses from the history, a candidate action and goal graphs.</li>
+        <li><strong>Imagine, execute one step, replan.</strong> The planner rolls out candidate trajectories, picks the shortest one that reaches the goal graph, takes a step and replans from the new observation.</li>
+      </ul>
     </div>
+
+    <details class="accordion">
+      <summary><span>Read the full abstract</span><i class="fas fa-chevron-down"></i></summary>
+      <div class="content accordion-body">
+        <p>
+          Ultrasound (US) acquisition depends on the operator's ability to interpret anatomy and anticipate how the
+          view will change with probe motion. Many robotic US navigation methods select actions without explicitly
+          predicting these anatomical changes. We propose SonoGraph-WM, an action- and goal-conditioned world model
+          for anticipatory probe navigation. The model represents anatomy as scene graphs (SGs), capturing visible
+          structures, their geometry, and spatial relationships without synthesizing US images. Given a history of
+          SGs and probe poses, a unified Transformer jointly predicts future SGs and poses. A receding-horizon planner
+          recursively imagines candidate trajectories, selects the shortest predicted path reaching a goal graph, and
+          follows it over a short execution horizon before replanning from new observations. To reduce reliance on
+          tracked and anatomically annotated US sequences, we generate aligned SG&ndash;pose training data from computed
+          tomography (CT) label maps along surface-constrained probe trajectories. On four held-out CT cases, spatial
+          relation F1 remains above 93% over 20 prediction steps, and closed-loop navigation achieves 77.50% and
+          75.00% success for the gallbladder and pancreas, respectively, using annotation-derived SGs. In robot&ndash;phantom
+          navigation experiments with label-map-derived SGs, the planner reached the target view in 73.7% of trials.
+          These findings support CT-supervised anatomical world modeling for probe planning and highlight the
+          importance of frequent observation updates for reliable navigation.
+        </p>
+      </div>
+    </details>
   </div>
 </section>
-<!-- END: Method Comparison Slider -->
 
 
+<!-- ============ How it works ============ -->
+<section class="section" id="method">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 section-title">How It Works</h2>
+    <p class="section-lead">
+      Every candidate probe motion is judged by the anatomy it is predicted to reveal.
+      The robot compares imagined futures before it moves, and trusts only what it actually observes.
+    </p>
 
-<!-- Quantitative results -->
+    <figure class="anim-figure">
+      <h3 class="anim-title"><span class="step-no">1</span>Scene graphs capture anatomy, not image texture</h3>
+      <div class="anim-card anim-wide">
+        <div class="ppt-anim" data-slides="slide02" data-crop="30,160,1220,520" data-speed="1.5" data-end-hold="4000"></div>
+      </div>
+      <figcaption>
+        Structures intersecting the imaging plane become nodes carrying component count, bounding box, centroid and
+        visible-area ratio; edges encode <em>adjacent to</em>, <em>left of</em> and <em>superficial to</em>.
+      </figcaption>
+    </figure>
+
+    <figure class="anim-figure">
+      <h3 class="anim-title"><span class="step-no">2</span>Imagine. Execute one step. Replan.</h3>
+      <div class="anim-card anim-wide">
+        <div class="ppt-anim"
+             data-slides="slide04,slide05,slide06,slide07,slide08,slide09,slide10,slide11,slide12,slide13,slide14"
+             data-crop="25,110,1230,585" data-hold="700" data-end-hold="4000"></div>
+      </div>
+      <figcaption>
+        At every step the world model imagines eight candidate rollouts (purple), keeps those whose predicted
+        scene graph matches the target graph, selects the one with the shortest predicted probe travel (teal),
+        executes a single step (red) and replans from the new observation. Navigation ends only when the
+        <em>observed</em> scene graph confirms the goal.
+        <span class="hint">Click to pause, or drag the scrubber.</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+
+<!-- ============ Robot-phantom ============ -->
+<section class="section section-alt" id="phantom">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 section-title">Robot&ndash;Phantom Navigation</h2>
+    <p class="section-lead">
+      A KUKA LBR iiwa&nbsp;7 carries a BK Medical bk3000 system with a 5C1e curved probe over a Kyoto Kagaku US-22
+      abdominal phantom. The planner receives only goal scene graphs, never goal poses.
+    </p>
+
+    <div class="columns is-variable is-5 is-desktop pair-row">
+      <div class="column">
+        <figure class="anim-figure">
+          <h3 class="anim-title">Robotic ultrasound platform</h3>
+          <div class="anim-card">
+            <div class="ppt-anim" data-slides="slide16" data-crop="150,205,970,490" data-controls="false"></div>
+          </div>
+        </figure>
+      </div>
+      <div class="column">
+        <figure class="anim-figure">
+          <h3 class="anim-title">The goal is a scene graph, not a probe pose</h3>
+          <div class="anim-card">
+            <div class="ppt-anim" data-slides="slide17" data-crop="200,160,880,475" data-controls="false"></div>
+          </div>
+        </figure>
+      </div>
+    </div>
+    <p class="pair-caption">
+      Navigation succeeds when the observed graph matches one of the target views (here: pancreas goal graph G1).
+    </p>
+
+    <figure class="anim-figure">
+      <h3 class="anim-title">Pancreas navigation on the phantom</h3>
+      <div class="anim-card anim-wide">
+        <div class="ppt-anim" data-slides="slide18" data-crop="30,105,1220,585" data-end-hold="0"></div>
+      </div>
+      <figcaption>
+        One pancreas trial, all views synchronized: RViz, third-view camera, acquired B-mode, the registered label map
+        and the observable scene graph at each step. Scene graphs come from the registered label map; B-mode is
+        recorded for assessment, not used for planning.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+
+<!-- ============ Results ============ -->
 <section class="section" id="results">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Quantitative Results</h2>
-    <p class="section-lead">
-      Quantitative comparison of different methods for US speckle reduction in terms of PSNR, SSIM, Homogeneity (Hom), and LPIPS.
-      The best-performing method for each metric, trained without clean images, is highlighted in <strong>bold</strong>.
-      The supervised method results are marked in a <span class="gray-shade">gray shade</span>.
-      Note that for clinical carotid images, the Noise2Noise and supervised Noise2True methods are not applicable.
-    </p>
-    <div class="results-table-wrap">
-    <table class="results-table">
-      <thead>
-        <tr>
-          <th rowspan="2" class="col-method">Method</th>
-          <th colspan="4" class="group-head">S-I Data</th>
-          <th colspan="4" class="group-head">S-II Data</th>
-          <th colspan="4" class="group-head">S-III Data</th>
-          <th class="group-head">Carotid</th>
-          <th rowspan="2" class="col-time">Time</th>
-        </tr>
-        <tr>
-          <th class="group-start">PSNR&thinsp;&uarr;&#xFE0E;</th>
-          <th>SSIM&thinsp;&uarr;&#xFE0E;</th>
-          <th>Hom&thinsp;&uarr;&#xFE0E;</th>
-          <th>LPIPS&thinsp;&darr;&#xFE0E;</th>
-          <th class="group-start">PSNR&thinsp;&uarr;&#xFE0E;</th>
-          <th>SSIM&thinsp;&uarr;&#xFE0E;</th>
-          <th>Hom&thinsp;&uarr;&#xFE0E;</th>
-          <th>LPIPS&thinsp;&darr;&#xFE0E;</th>
-          <th class="group-start">PSNR&thinsp;&uarr;&#xFE0E;</th>
-          <th>SSIM&thinsp;&uarr;&#xFE0E;</th>
-          <th>Hom&thinsp;&uarr;&#xFE0E;</th>
-          <th>LPIPS&thinsp;&darr;&#xFE0E;</th>
-          <th class="group-start">Hom&thinsp;&uarr;&#xFE0E;</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="group-row"><th colspan="15" scope="colgroup"><span>Non-learning based</span></th></tr>
-        <tr>
-          <th scope="row" class="col-method" title="Yu and Acton (2002)">SRAD</th>
-          <td class="group-start best">19.40</td>
-          <td>0.734</td>
-          <td>0.763</td>
-          <td>0.411</td>
-          <td class="group-start best">19.57</td>
-          <td>0.735</td>
-          <td>0.768</td>
-          <td>0.419</td>
-          <td class="group-start">20.81</td>
-          <td>0.880</td>
-          <td>0.874</td>
-          <td>0.246</td>
-          <td class="group-start">0.705</td>
-          <td class="col-time">6 s</td>
-        </tr>
-        <tr>
-          <th scope="row" class="col-method" title="Buades et al. (2005)">NLM</th>
-          <td class="group-start best">19.40</td>
-          <td>0.736</td>
-          <td>0.714</td>
-          <td>0.417</td>
-          <td class="group-start">19.52</td>
-          <td>0.738</td>
-          <td>0.740</td>
-          <td>0.428</td>
-          <td class="group-start">20.94</td>
-          <td>0.881</td>
-          <td>0.839</td>
-          <td>0.310</td>
-          <td class="group-start">0.691</td>
-          <td class="col-time">80 ms</td>
-        </tr>
-        <tr>
-          <th scope="row" class="col-method" title="Dabov et al. (2007)">BM3D</th>
-          <td class="group-start">19.26</td>
-          <td>0.684</td>
-          <td>0.691</td>
-          <td>0.397</td>
-          <td class="group-start">19.34</td>
-          <td>0.679</td>
-          <td>0.694</td>
-          <td>0.407</td>
-          <td class="group-start">21.01</td>
-          <td>0.875</td>
-          <td>0.844</td>
-          <td>0.245</td>
-          <td class="group-start">0.656</td>
-          <td class="col-time">3 s</td>
-        </tr>
-        <tr>
-          <th scope="row" class="col-method" title="Coupé et al. (2009)">OBNLM</th>
-          <td class="group-start">18.84</td>
-          <td>0.703</td>
-          <td>0.577</td>
-          <td>0.470</td>
-          <td class="group-start">18.88</td>
-          <td>0.702</td>
-          <td>0.621</td>
-          <td>0.484</td>
-          <td class="group-start">21.49</td>
-          <td>0.885</td>
-          <td>0.774</td>
-          <td>0.299</td>
-          <td class="group-start">0.460</td>
-          <td class="col-time">12 s</td>
-        </tr>
-        <tr class="group-row"><th colspan="15" scope="colgroup"><span>Supervised (Noisy-Clean Pairs)</span></th></tr>
-        <tr class="supervised-row">
-          <th scope="row" class="col-method">Noise2True</th>
-          <td class="group-start shade">23.33</td>
-          <td class="shade">0.936</td>
-          <td class="shade">0.910</td>
-          <td class="shade">0.059</td>
-          <td class="group-start shade">23.25</td>
-          <td class="shade">0.937</td>
-          <td class="shade">0.923</td>
-          <td class="shade">0.049</td>
-          <td class="group-start shade">27.66</td>
-          <td class="shade">0.973</td>
-          <td class="shade">0.941</td>
-          <td class="shade">0.062</td>
-          <td class="group-start"><span class="na" title="Not applicable">&times;</span></td>
-          <td class="col-time">6 ms</td>
-        </tr>
-        <tr class="group-row"><th colspan="15" scope="colgroup"><span>Self-supervised (Noisy-Noisy Pairs)</span></th></tr>
-        <tr>
-          <th scope="row" class="col-method" title="Lehtinen (2018)">N2N</th>
-          <td class="group-start">18.05</td>
-          <td>0.705</td>
-          <td>0.683</td>
-          <td>0.369</td>
-          <td class="group-start">17.74</td>
-          <td>0.691</td>
-          <td>0.689</td>
-          <td>0.410</td>
-          <td class="group-start">21.99</td>
-          <td>0.895</td>
-          <td>0.820</td>
-          <td>0.240</td>
-          <td class="group-start"><span class="na" title="Not applicable">&times;</span></td>
-          <td class="col-time">6 ms</td>
-        </tr>
-        <tr class="group-row"><th colspan="15" scope="colgroup"><span>Self-supervised (Single Noisy Images)</span></th></tr>
-        <tr>
-          <th scope="row" class="col-method" title="Ulyanov et al. (2018)">DIP(*)</th>
-          <td class="group-start">18.87</td>
-          <td>0.543</td>
-          <td>0.515</td>
-          <td>0.484</td>
-          <td class="group-start">18.93</td>
-          <td>0.523</td>
-          <td>0.531</td>
-          <td>0.501</td>
-          <td class="group-start">20.98</td>
-          <td>0.831</td>
-          <td>0.747</td>
-          <td>0.323</td>
-          <td class="group-start">0.436</td>
-          <td class="col-time"><span class="na" title="Not applicable">&times;</span></td>
-        </tr>
-        <tr>
-          <th scope="row" class="col-method" title="Krull et al. (2019)">N2V</th>
-          <td class="group-start">17.62</td>
-          <td>0.311</td>
-          <td>0.312</td>
-          <td>0.561</td>
-          <td class="group-start">17.55</td>
-          <td>0.314</td>
-          <td>0.339</td>
-          <td>0.551</td>
-          <td class="group-start">19.87</td>
-          <td>0.613</td>
-          <td>0.573</td>
-          <td>0.388</td>
-          <td class="group-start">0.215</td>
-          <td class="col-time">6 ms</td>
-        </tr>
-        <tr>
-          <th scope="row" class="col-method" title="Batson and Royer (2019)">N2S(*)</th>
-          <td class="group-start">17.32</td>
-          <td>0.303</td>
-          <td>0.308</td>
-          <td>0.549</td>
-          <td class="group-start">17.64</td>
-          <td>0.310</td>
-          <td>0.339</td>
-          <td>0.545</td>
-          <td class="group-start">19.69</td>
-          <td>0.587</td>
-          <td>0.576</td>
-          <td>0.399</td>
-          <td class="group-start">0.227</td>
-          <td class="col-time"><span class="na" title="Not applicable">&times;</span></td>
-        </tr>
-        <tr>
-          <th scope="row" class="col-method" title="Batson and Royer (2019)">N2S</th>
-          <td class="group-start">18.14</td>
-          <td>0.346</td>
-          <td>0.316</td>
-          <td>0.543</td>
-          <td class="group-start">17.64</td>
-          <td>0.344</td>
-          <td>0.330</td>
-          <td>0.547</td>
-          <td class="group-start">20.41</td>
-          <td>0.657</td>
-          <td>0.573</td>
-          <td>0.399</td>
-          <td class="group-start">0.184</td>
-          <td class="col-time">6 ms</td>
-        </tr>
-        <tr>
-          <th scope="row" class="col-method" title="Huang et al. (2021)">Neighbor2Neighbor</th>
-          <td class="group-start">17.63</td>
-          <td>0.319</td>
-          <td>0.310</td>
-          <td>0.556</td>
-          <td class="group-start">17.79</td>
-          <td>0.321</td>
-          <td>0.339</td>
-          <td>0.549</td>
-          <td class="group-start">20.19</td>
-          <td>0.637</td>
-          <td>0.574</td>
-          <td>0.384</td>
-          <td class="group-start">0.213</td>
-          <td class="col-time">6 ms</td>
-        </tr>
-        <tr>
-          <th scope="row" class="col-method" title="Mansour and Heckel (2023)">ZS-N2N(*)</th>
-          <td class="group-start">17.58</td>
-          <td>0.315</td>
-          <td>0.312</td>
-          <td>0.557</td>
-          <td class="group-start">17.71</td>
-          <td>0.318</td>
-          <td>0.340</td>
-          <td>0.550</td>
-          <td class="group-start">20.04</td>
-          <td>0.625</td>
-          <td>0.576</td>
-          <td>0.384</td>
-          <td class="group-start">0.214</td>
-          <td class="col-time"><span class="na" title="Not applicable">&times;</span></td>
-        </tr>
-        <tr class="ours-row">
-          <th scope="row" class="col-method">Speckle2Self (our)</th>
-          <td class="group-start">18.59</td>
-          <td class="best">0.771</td>
-          <td class="best">0.803</td>
-          <td class="best">0.231</td>
-          <td class="group-start">18.94</td>
-          <td class="best">0.777</td>
-          <td class="best">0.792</td>
-          <td class="best">0.233</td>
-          <td class="group-start best">22.90</td>
-          <td class="best">0.922</td>
-          <td class="best">0.876</td>
-          <td class="best">0.173</td>
-          <td class="group-start best">0.725</td>
-          <td class="col-time">7 ms</td>
-        </tr>
-      </tbody>
-    </table>
+    <h2 class="title is-3 section-title">Results at a Glance</h2>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-value">&gt;93%</div>
+        <div class="stat-label">spatial-relation F1 over 20 imagined steps</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">77.5%</div>
+        <div class="stat-label">gallbladder navigation success, held-out CT</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">75.0%</div>
+        <div class="stat-label">pancreas navigation success, held-out CT</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">73.7%</div>
+        <div class="stat-label">robot&ndash;phantom trials reach the target view (14/19)</div>
+      </div>
     </div>
-    <dl class="table-legend">
-      <dt>S-I / S-II / S-III</dt>
-      <dd>Simulated datasets with paired clean and speckled images. S-I includes heavy artifacts beyond speckle; S-II and S-III have fewer artifacts, with S-II sharing similar shapes with S-I and S-III featuring different shapes.</dd>
-      <dt>Carotid</dt>
-      <dd>In vivo carotid images acquired with a Clarius L7 scanner, without clean targets; evaluated with the no-reference GLCM homogeneity (Hom).</dd>
-      <dt>(*)</dt>
-      <dd>The method needs to be retrained in zero-shot self-supervised mode for each image.</dd>
-      <dt>&times;</dt>
-      <dd>Not applicable.</dd>
-    </dl>
-    <p class="table-note"><span class="is-hidden-tablet">Swipe the table sideways to see every column. </span><a href="static/images/quantitative_results.png" target="_blank">View the original table image</a>.</p>
+
+    <details class="accordion">
+      <summary><span>Why replanning after every step matters</span><i class="fas fa-chevron-down"></i></summary>
+      <div class="accordion-body">
+        <p class="table-intro">
+          Closed-loop success rate (%) on four held-out CT cases, 120 trials per target, for execution horizons of
+          1, 5 and 10 steps before replanning. Near/far groups start closer to or farther from the nearest goal view.
+        </p>
+        <div class="results-table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th class="col-left">Target</th>
+                <th class="col-left">Start</th>
+                <th class="is-hl">Execute 1</th>
+                <th>Execute 5</th>
+                <th>Execute 10</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th class="col-left" rowspan="3">Gallbladder</th><td class="col-left">Near</td><td class="is-hl">81.25</td><td>34.38</td><td>39.06</td></tr>
+              <tr><td class="col-left">Far</td><td class="is-hl">73.21</td><td>48.21</td><td>37.50</td></tr>
+              <tr class="overall"><td class="col-left">Overall</td><td class="is-hl">77.50</td><td>40.83</td><td>38.33</td></tr>
+              <tr class="group-start"><th class="col-left" rowspan="3">Pancreas</th><td class="col-left">Near</td><td class="is-hl">80.00</td><td>29.23</td><td>32.31</td></tr>
+              <tr><td class="col-left">Far</td><td class="is-hl">69.09</td><td>16.36</td><td>10.91</td></tr>
+              <tr class="overall"><td class="col-left">Overall</td><td class="is-hl">75.00</td><td>23.33</td><td>22.50</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
 
-
-<!-- <section class="section" id="Code">
-  <div class="container is-max-desktop content">
-    <h2 class="title">Code</h2>
-    <p>
-      The code for this project will be coming soon.
-    </p>
-  </div>
-</section> -->
-
-
-<!--BibTex citation -->
-<!-- <section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <div style="position:relative;">
-      <button class="button is-small is-rounded has-background-white" id="copy-bibtex-btn"
-        style="position:absolute; top:0.7em; right:0.7em; z-index:2; box-shadow:0 2px 8px rgba(0,0,0,0.08); border:1px solid #ddd;">
-        <span class="icon is-small" style="color:#363636;">
-          <i class="fas fa-copy"></i>
-        </span>
-      </button>
-      <pre style="white-space:pre-wrap; word-break:break-all; padding-top:2.2em; border-radius:8px; border:1px solid #eee; background:#fafbfc;">
-  <code id="bibtex-code">@misc{li2025speckle2selfselfsupervisedultrasoundspeckle,
-          title={Speckle2Self: Self-Supervised Ultrasound Speckle Reduction Without Clean Data}, 
-          author={Xuesong Li and Nassir Navab and Zhongliang Jiang},
-          year={2025},
-          eprint={2507.06828},
-          archivePrefix={arXiv},
-          primaryClass={eess.IV},
-          url={https://arxiv.org/abs/2507.06828}, 
-      }
-  </code></pre>
-    </div>
-  </div>
-</section> -->
-<!--End BibTex citation -->
+<!-- ============ BibTeX ============ -->
 <section class="section section-alt" id="BibTeX">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">BibTeX</h2>
-    <!-- @misc{
-      li2025speckle2selfselfsupervisedultrasoundspeckle,
-      title={Speckle2Self: Self-Supervised Ultrasound Speckle Reduction Without Clean Data},
-      author={Xuesong Li and Nassir Navab and Zhongliang Jiang},
-      year={2025},
-      eprint={2507.06828},
-      archivePrefix={arXiv},
-      primaryClass={eess.IV},
-      url={https://arxiv.org/abs/2507.06828},
-    } -->
     <div class="bibtex-block">
       <button class="button is-small is-rounded copy-bibtex" id="copy-bibtex-btn" type="button">
         <span class="icon is-small"><i class="fas fa-copy"></i></span>
         <span class="copy-label">Copy</span>
       </button>
-<pre><code id="bibtex-code">@article{li2025speckle2self,
-  title={Speckle2Self: Self-supervised ultrasound speckle reduction without clean data},
-  author={Li, Xuesong and Navab, Nassir and Jiang, Zhongliang},
-  journal={Medical Image Analysis},
-  pages={103755},
-  year={2025},
-  publisher={Elsevier}
+<pre><code id="bibtex-code">@misc{li2026scanning,
+  title={Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation},
+  author={Li, Xuesong and Chen, Shuai and Li, Feng and Jiang, Zhongliang and Navab, Nassir and Bi, Yuan},
+  year={2026},
+  note={Under review}
 }</code></pre>
     </div>
   </div>
 </section>
 
-
-  <footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content has-text-centered">
-
-          <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page, and also draws inspiration from the <a href="https://3d-ultrasound-diffusion.github.io/" target="_blank">3D Ultrasound Diffusion</a> project page.
-            <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-
-
-<!-- backup codes -->
-
-
-<!-- Teaser video-->
-<!-- <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video poster="" id="tree" autoplay controls muted loop height="100%"> -->
-
-        <!-- Your video here -->
-
-        <!-- <source src="static/videos/banner_video.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
-    </div>
-  </div>
-</section> -->
-<!-- End teaser video -->
-
- 
-<!-- Image carousel -->
-<!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item"> -->
-
-        <!-- Your image here -->
-
-        <!-- <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          First image description.
-        </h2>
-      </div>
-     <div class="item"> -->
-
-      <!-- Your image here -->
-
-      <!-- <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
-      </h2>
-    </div>
-  </div>
-</div>
-</div>
-</section> -->
-<!-- End image carousel -->
-
-
-
-
-<!-- Youtube video -->
-<!-- <section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container"> -->
-
-      <!-- Paper video. -->
-
-      <!-- <h2 class="title is-3">Video Presentation</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video"> -->
-
-            <!-- Youtube embed code here -->
-
-            <!-- <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- End youtube video -->
-
-
-<!-- Video carousel -->
-<!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop height="100%"> -->
-
-            <!-- Your video file here -->
-
-            <!-- <source src="static/videos/carousel1.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop height="100%"> -->
-
-            <!-- Your video file here -->
-
-            <!-- <source src="static/videos/carousel2.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop height="100%">\ -->
-
-            <!-- Your video file here -->
-
-            <!-- <source src="static/videos/carousel3.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- End video carousel -->
-
-
-
-
-<!-- Paper poster -->
-<!-- <section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">Poster</h2>
-
-      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
-          </iframe>
-        
-      </div>
-    </div>
-  </section> -->
-<!--End paper poster -->
-
-
-
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
-
-  </body>
-  </html>
+</body>
+</html>
