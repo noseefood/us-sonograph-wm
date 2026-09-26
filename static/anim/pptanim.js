@@ -17,7 +17,11 @@
  *   data-speed      playback rate of the animations, e.g. "1.3"          (default 1;
  *                   holds are given in real ms and are not sped up)
  *
- * Slide data files (slides/slideNN.js) are loaded on demand from next to this script.
+ *   aria-label      accessible name (default: text of the enclosing figure's .anim-title)
+ *
+ * Slide data files (slides/slideNN.js) and their images (img/) are loaded from next to this
+ * script once a player comes within ~800px of the viewport. Clicking an animated player
+ * pauses/resumes it; clicking a static one (no animations) opens it full screen.
  */
 (function () {
   'use strict';
@@ -88,7 +92,8 @@
         flushSvg();
         planes.push({ type: 'video', layer: L, k: k });
       } else {
-        svgBuf.push('<g data-l="' + k + '">' + L.svg + '</g>');
+        // rasters live in img/ next to this script, shared (and cached) across slides
+        svgBuf.push('<g data-l="' + k + '">' + L.svg.replace(/@IMG\//g, base + 'img/') + '</g>');
       }
     });
     flushSvg();
@@ -102,7 +107,8 @@
         v.className = 'ppt-video';
         v.src = base + pl.layer.video;
         v.poster = base + pl.layer.poster;
-        v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+        // preload nothing: the poster is shown until the timeline actually starts the video
+        v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none';
         v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
         v.style.left = (b[0] / data.w * 100) + '%';
         v.style.top = (b[1] / data.h * 100) + '%';
@@ -167,29 +173,73 @@
     this.t = 0; this.playing = false; this.visible = false; this.userPaused = false;
     this.reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var self = this;
-    Promise.all(this.ids.map(load)).then(function (datas) { self.init(datas); })
-      .catch(function (err) { root.textContent = err.message; });
+
+    // Build the frame right away (slides are 1280x720) so the page never jumps when data arrives.
+    var crop = ds.crop ? ds.crop.split(',').map(Number) : [0, 0, 1280, 720];
+    this.stage = document.createElement('div');
+    this.stage.className = 'ppt-stage';
+    this.stage.style.aspectRatio = crop[2] + ' / ' + crop[3];
+    root.style.setProperty('--ppt-ar', crop[2] / crop[3]);
+    this.inner = document.createElement('div');
+    this.inner.className = 'ppt-inner';
+    this.inner.style.width = (1280 / crop[2] * 100) + '%';
+    this.inner.style.height = (720 / crop[3] * 100) + '%';
+    this.inner.style.left = (-crop[0] / crop[2] * 100) + '%';
+    this.inner.style.top = (-crop[1] / crop[3] * 100) + '%';
+    this.stage.appendChild(this.inner);
+    root.appendChild(this.stage);
+    if (this.controls) {
+      this.bar = document.createElement('div');
+      this.bar.className = 'ppt-controls';
+      root.appendChild(this.bar);
+    }
+
+    // Fetch slide data only when the player comes near the viewport.
+    function start() {
+      Promise.all(self.ids.map(load)).then(function (datas) { self.init(datas); })
+        .catch(function (err) { self.stage.textContent = err.message; });
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); }
+      }, { rootMargin: '800px 0px' });
+      io.observe(root);
+    } else {
+      start();
+    }
   }
 
-  Player.prototype.init = function (datas) {
-    var self = this, root = this.root, first = datas[0];
-    root.classList.add('ppt-ready');
-    var stage = document.createElement('div');
-    stage.className = 'ppt-stage';
-    var crop = root.dataset.crop ? root.dataset.crop.split(',').map(Number) : null;
-    var inner = document.createElement('div');
-    inner.className = 'ppt-inner';
-    if (crop) {
-      stage.style.aspectRatio = crop[2] + ' / ' + crop[3];
-      inner.style.width = (first.w / crop[2] * 100) + '%';
-      inner.style.height = (first.h / crop[3] * 100) + '%';
-      inner.style.left = (-crop[0] / crop[2] * 100) + '%';
-      inner.style.top = (-crop[1] / crop[3] * 100) + '%';
+  function fullscreenElement() {
+    return document.fullscreenElement || document.webkitFullscreenElement;
+  }
+
+  Player.prototype.toggleFullscreen = function () {
+    var root = this.root;
+    if (fullscreenElement() === root) {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
     } else {
-      stage.style.aspectRatio = first.w + ' / ' + first.h;
+      var req = root.requestFullscreen || root.webkitRequestFullscreen;
+      if (req) req.call(root);
     }
-    stage.appendChild(inner);
-    root.appendChild(stage);
+  };
+
+  Player.prototype.init = function (datas) {
+    var self = this, root = this.root, stage = this.stage, inner = this.inner;
+    root.classList.add('ppt-ready');
+
+    // Players whose slides don't animate (static figures) open full screen on click instead.
+    this.animated = datas.some(function (d) { return d.duration > 0; });
+    var label = root.getAttribute('aria-label') || (function () {
+      var fig = root.closest('figure'), h = fig && fig.querySelector('.anim-title');
+      if (!h) return 'Slide';
+      h = h.cloneNode(true);
+      h.querySelectorAll('.step-no').forEach(function (n) { n.remove(); }); // decorative step badge
+      return h.textContent.trim();
+    })();
+    stage.setAttribute('role', 'img');
+    stage.setAttribute('aria-label', label + (this.animated ? ' (animation)' : ''));
+    stage.tabIndex = 0;
+    if (!this.animated) root.classList.add('ppt-static');
 
     this.slides = datas.map(function (d) { var S = buildSlide(d); inner.appendChild(S.el); return S; });
     var acc = 0, n = this.slides.length;
@@ -203,10 +253,15 @@
     this.total = acc;
     this.active = null;
 
-    if (this.controls) this.buildControls(root);
-    stage.addEventListener('click', function () { self.toggle(); });
+    if (this.controls) this.buildControls();
+    function activate() { if (self.animated) self.toggle(); else self.toggleFullscreen(); }
+    stage.addEventListener('click', activate);
+    stage.addEventListener('keydown', function (ev) {
+      if (ev.key === ' ' || ev.key === 'Enter') { ev.preventDefault(); activate(); }
+    });
 
     this.render(true);
+    if (!this.animated) return; // nothing to play
     if (this.reduced) {
       this.seek(this.segs[0].S.data.duration / this.speed);
     } else if (this.autoplay === 'view' && 'IntersectionObserver' in window) {
@@ -225,25 +280,28 @@
     });
   };
 
-  Player.prototype.buildControls = function (root) {
-    var self = this;
-    var bar = document.createElement('div');
-    bar.className = 'ppt-controls';
+  Player.prototype.buildControls = function () {
+    var self = this, bar = this.bar;
+    var canFullscreen = document.fullscreenEnabled || document.webkitFullscreenEnabled;
     bar.innerHTML =
       '<button type="button" class="ppt-btn ppt-toggle" aria-label="Play"></button>' +
       '<button type="button" class="ppt-btn ppt-restart" aria-label="Restart">' +
       '<svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg></button>' +
-      '<div class="ppt-track" role="slider" tabindex="0" aria-label="Seek"><div class="ppt-fill"></div>' +
+      '<div class="ppt-track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100"><div class="ppt-fill"></div>' +
       this.segs.map(function (s) { return '<i style="left:' + (s.start / self.total * 100) + '%"></i>'; }).join('') +
-      '</div>';
-    root.appendChild(bar);
+      '</div>' +
+      (canFullscreen ? '<button type="button" class="ppt-btn ppt-full" aria-label="Full screen">' +
+        '<svg viewBox="0 0 24 24"><path d="M4 9V4h5v2H6v3zm11-5h5v5h-2V6h-3zM4 15h2v3h3v2H4zm14 3v-3h2v5h-5v-2z"/></svg></button>' : '');
     this.btn = bar.querySelector('.ppt-toggle');
     this.fill = bar.querySelector('.ppt-fill');
-    var track = bar.querySelector('.ppt-track');
+    this.track = bar.querySelector('.ppt-track');
+    var track = this.track;
     this.btn.addEventListener('click', function () { self.toggle(); });
     bar.querySelector('.ppt-restart').addEventListener('click', function () {
       self.seek(0); self.userPaused = false; self.play();
     });
+    var full = bar.querySelector('.ppt-full');
+    if (full) full.addEventListener('click', function () { self.toggleFullscreen(); });
     function seekFrom(ev) {
       var r = track.getBoundingClientRect();
       var x = Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width));
@@ -325,7 +383,11 @@
     }
     // player time is real ms; slide time runs `speed` times faster
     applySlide(seg.S, Math.min((t - seg.start) * this.speed, seg.S.data.duration + 1), this.playing, resync);
-    if (this.fill) this.fill.style.width = (t / this.total * 100) + '%';
+    if (this.fill) {
+      var pct = t / this.total * 100;
+      this.fill.style.width = pct + '%';
+      this.track.setAttribute('aria-valuenow', Math.round(pct));
+    }
   };
 
   function mountAll() {

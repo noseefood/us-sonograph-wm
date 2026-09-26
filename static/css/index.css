@@ -100,6 +100,18 @@ body {
   margin: 6px 4px;
 }
 
+/* Inline SVG icons (replace the Font Awesome / Academicons web fonts). */
+.icon svg {
+  display: block;
+  width: 1.05em;
+  height: 1.05em;
+}
+
+.button.is-small .icon svg {
+  width: 0.95em;
+  height: 0.95em;
+}
+
 .button.is-dark {
   background: var(--text);
   border: none;
@@ -217,7 +229,8 @@ body {
   line-height: 1.65;
 }
 
-.anim-figure figcaption .hint {
+.anim-figure figcaption .hint,
+.pair-caption .hint {
   display: block;
   margin-top: 0.3rem;
   font-size: 0.85rem;
@@ -239,11 +252,6 @@ body {
   text-align: center;
   color: var(--text-muted);
   font-size: 0.97rem;
-}
-
-/* Static slides have nothing to play: no pointer cursor. */
-.ppt-anim[data-controls="false"] .ppt-stage {
-  cursor: default;
 }
 
 
@@ -307,13 +315,14 @@ body {
 
 .accordion summary::-webkit-details-marker { display: none; }
 
-.accordion summary svg,
-.accordion summary i {
+.accordion summary .chevron {
+  flex: none;
+  width: 1.2rem;
+  height: 1.2rem;
   transition: transform 0.25s;
 }
 
-.accordion[open] summary svg,
-.accordion[open] summary i {
+.accordion[open] summary .chevron {
   transform: rotate(180deg);
 }
 

@@ -1,5 +1,6 @@
-/* Styles for pptanim.js players. Slides were authored in Roboto; load it so text metrics match PowerPoint. */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+/* Styles for pptanim.js players.
+   Slide text is set in Roboto (400/700); the page must load it so text metrics match PowerPoint, e.g.
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> */
 
 .ppt-anim {
   position: relative;
@@ -19,6 +20,35 @@
   position: absolute;
   inset: 0;
 }
+
+.ppt-static .ppt-stage { cursor: zoom-in; }
+
+.ppt-stage:focus-visible {
+  outline: 2px solid #7e6999;
+  outline-offset: 2px;
+}
+
+/* Full screen: fit the slide into the screen, controls underneath. */
+.ppt-anim:fullscreen,
+.ppt-anim:-webkit-full-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0 !important;
+  padding: 2vh 2vw;
+  background: #fff;
+}
+.ppt-anim:fullscreen .ppt-stage,
+.ppt-anim:fullscreen .ppt-controls {
+  width: min(96vw, calc((96vh - 48px) * var(--ppt-ar, 1.7778)));
+}
+.ppt-anim:-webkit-full-screen .ppt-stage,
+.ppt-anim:-webkit-full-screen .ppt-controls {
+  width: min(96vw, calc((96vh - 48px) * var(--ppt-ar, 1.7778)));
+}
+.ppt-static:fullscreen .ppt-stage { cursor: zoom-out; }
+.ppt-static:-webkit-full-screen .ppt-stage { cursor: zoom-out; }
 
 .ppt-slide {
   position: absolute;
@@ -47,6 +77,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  box-sizing: content-box;
+  min-height: 28px; /* reserved before the slide data loads, so nothing shifts */
   padding: 6px 2px 0;
   opacity: .55;
   transition: opacity .2s;
@@ -56,6 +88,7 @@
 
 .ppt-btn {
   flex: none;
+  box-sizing: border-box;
   width: 28px;
   height: 28px;
   padding: 4px;
