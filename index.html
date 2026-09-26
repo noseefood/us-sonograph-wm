@@ -24,17 +24,31 @@
   <link rel="icon" type="image/x-icon" href="static/images/ultrasound_icon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Inter for the page, Roboto for the slide animations -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Inter for the page, JetBrains Mono for BibTeX, Roboto for the slide animations -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <!-- ?v= busts browser/CDN caches (GitHub Pages caches 10 min): bump it whenever css/js/slides change -->
-  <link rel="stylesheet" href="static/css/bulma.min.css?v=20260926b">
-  <link rel="stylesheet" href="static/anim/pptanim.css?v=20260926b">
-  <link rel="stylesheet" href="static/css/index.css?v=20260926b">
+  <link rel="stylesheet" href="static/css/bulma.min.css?v=20260926c">
+  <link rel="stylesheet" href="static/anim/pptanim.css?v=20260926c">
+  <link rel="stylesheet" href="static/css/index.css?v=20260926c">
 
-  <script defer src="static/anim/pptanim.js?v=20260926b"></script>
-  <script defer src="static/js/copybutton.js?v=20260926b"></script>
+  <script defer src="static/anim/pptanim.js?v=20260926c"></script>
+  <script defer src="static/js/copybutton.js?v=20260926c"></script>
 </head>
-<body>
+<body id="top">
+
+<!-- ============ Navigation ============ -->
+<nav class="site-nav" aria-label="Sections">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="#top">SonoGraph-WM</a>
+    <div class="site-nav-links">
+      <a href="#abstract">Overview</a>
+      <a href="#method">Method</a>
+      <a href="#phantom">Robot</a>
+      <a href="#results">Results</a>
+      <a href="#BibTeX">BibTeX</a>
+    </div>
+  </div>
+</nav>
 
 <!-- ============ Hero ============ -->
 <section class="hero publication-hero">
@@ -60,13 +74,13 @@
 
       <div class="publication-links">
         <span class="link-block">
-          <span class="button is-normal is-rounded is-dark is-soon" title="Coming soon" aria-disabled="true">
+          <span class="button is-normal is-rounded is-soon" title="Coming soon" aria-disabled="true">
             <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6M9 13h7M9 17h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
             <span>arXiv (soon)</span>
           </span>
         </span>
         <span class="link-block">
-          <span class="button is-normal is-rounded is-dark is-soon" title="Coming soon" aria-disabled="true">
+          <span class="button is-normal is-rounded is-soon" title="Coming soon" aria-disabled="true">
             <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></span>
             <span>Code (soon)</span>
           </span>
@@ -103,6 +117,7 @@
 <!-- ============ In a nutshell + abstract ============ -->
 <section class="section section-alt" id="abstract">
   <div class="container is-max-desktop">
+    <p class="section-eyebrow">Overview</p>
     <h2 class="title is-3 section-title">In a Nutshell</h2>
     <div class="content nutshell">
       <p>
@@ -147,6 +162,7 @@
 <!-- ============ How it works ============ -->
 <section class="section" id="method">
   <div class="container is-max-widescreen">
+    <p class="section-eyebrow">Method</p>
     <h2 class="title is-3 section-title">How It Works</h2>
     <p class="section-lead">
       Every candidate probe motion is judged by the anatomy it is predicted to reveal.
@@ -156,7 +172,7 @@
     <figure class="anim-figure">
       <h3 class="anim-title"><span class="step-no">1</span>Scene graphs capture anatomy, not image texture</h3>
       <div class="anim-card anim-wide">
-        <div class="ppt-anim" data-slides="slide02" data-crop="30,160,1220,520" data-speed="1.5" data-end-hold="4000"></div>
+        <div class="ppt-anim" data-slides="slide02" data-crop="30,160,1220,520" data-speed="2@25%,1.5" data-end-hold="4000"></div>
       </div>
       <figcaption>
         Structures intersecting the imaging plane become nodes carrying component count, bounding box, centroid and
@@ -186,6 +202,7 @@
 <!-- ============ Robot-phantom ============ -->
 <section class="section section-alt" id="phantom">
   <div class="container is-max-widescreen">
+    <p class="section-eyebrow">Real robot</p>
     <h2 class="title is-3 section-title">Robot&ndash;Phantom Navigation</h2>
     <p class="section-lead">
       A KUKA LBR iiwa&nbsp;7 carries a BK Medical bk3000 system with a 5C1e curved probe over a Kyoto Kagaku US-22
@@ -197,7 +214,7 @@
         <figure class="anim-figure">
           <h3 class="anim-title">Robotic ultrasound platform</h3>
           <div class="anim-card">
-            <div class="ppt-anim" data-slides="slide16" data-crop="150,205,970,490" data-controls="false"></div>
+            <div class="ppt-anim" data-slides="slide16" data-crop="150,188,970,524" data-controls="false"></div>
           </div>
         </figure>
       </div>
@@ -233,6 +250,7 @@
 <!-- ============ Results ============ -->
 <section class="section" id="results">
   <div class="container is-max-desktop">
+    <p class="section-eyebrow">Evaluation</p>
     <h2 class="title is-3 section-title">Results at a Glance</h2>
 
     <div class="stat-grid">
@@ -289,23 +307,28 @@
 
 
 <!-- ============ BibTeX ============ -->
-<section class="section section-alt" id="BibTeX">
+<section class="section section-cite" id="BibTeX">
   <div class="container is-max-desktop">
+    <p class="section-eyebrow">Citation</p>
     <h2 class="title is-3 section-title">BibTeX</h2>
     <div class="bibtex-block">
       <button class="button is-small is-rounded copy-bibtex" id="copy-bibtex-btn" type="button">
         <span class="icon is-small"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
         <span class="copy-label">Copy</span>
       </button>
-<pre><code id="bibtex-code">@misc{li2026scanning,
-  title={Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation},
-  author={Li, Xuesong and Chen, Shuai and Li, Feng and Jiang, Zhongliang and Navab, Nassir and Bi, Yuan},
-  year={2026},
-  note={Under review}
+<pre><code id="bibtex-code"><span class="bib-type">@misc</span>{<span class="bib-key">li2026scanning</span>,
+  <span class="bib-field">title</span>={Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation},
+  <span class="bib-field">author</span>={Li, Xuesong and Chen, Shuai and Li, Feng and Jiang, Zhongliang and Navab, Nassir and Bi, Yuan},
+  <span class="bib-field">year</span>={2026},
+  <span class="bib-field">note</span>={Under review}
 }</code></pre>
     </div>
   </div>
 </section>
+
+<footer class="site-footer">
+  <a href="#top">Back to top &uarr;</a>
+</footer>
 
 </body>
 </html>

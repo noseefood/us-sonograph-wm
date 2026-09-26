@@ -14,8 +14,10 @@
  *   data-autoplay   "view" = play while on screen, "none" = wait for a click (default view)
  *   data-controls   "false" to hide the control bar                     (default true)
  *   data-crop       "x,y,w,h" in slide px (1280x720) to show only part of the slide
- *   data-speed      playback rate of the animations, e.g. "1.3"          (default 1;
- *                   holds are given in real ms and are not sped up)
+ *   data-speed      playback rate of the animations, e.g. "1.3"          (default 1).
+ *                   Piecewise per slide: "2@25%,1.5" = 2x for the first 25% of each slide's
+ *                   timeline, 1.5x for the rest ("r1@p1%,r2@p2%,...,rN").
+ *                   Holds are given in real ms and are not sped up.
  *
  *   aria-label      accessible name (default: text of the enclosing figure's .anim-title)
  *
@@ -52,6 +54,37 @@
       }
       waiting[id].push(resolve);
     });
+  }
+
+  // ---- playback speed: "1.3" or piecewise "2@25%,1.5" ----
+  function parseSpeed(str) {
+    var parts = String(str || '1').split(',').map(function (p) {
+      var m = /^\s*([\d.]+)\s*(?:@\s*([\d.]+)\s*%)?\s*$/.exec(p);
+      return m && +m[1] > 0 ? { rate: +m[1], until: m[2] != null ? +m[2] / 100 : 1 } : null;
+    }).filter(Boolean);
+    if (!parts.length) parts = [{ rate: 1, until: 1 }];
+    parts[parts.length - 1].until = 1;
+    return parts;
+  }
+
+  // Maps real (wall-clock) ms since a slide started to that slide's timeline ms.
+  function makeClock(duration, parts) {
+    var segs = [], slide0 = 0, real0 = 0;
+    parts.forEach(function (p) {
+      var slide1 = Math.max(slide0, p.until * duration);
+      var real1 = real0 + (slide1 - slide0) / p.rate;
+      segs.push({ s0: slide0, r0: real0, r1: real1, rate: p.rate });
+      slide0 = slide1; real0 = real1;
+    });
+    function find(r) {
+      for (var i = 0; i < segs.length - 1; i++) if (r < segs[i].r1) return segs[i];
+      return segs[segs.length - 1];
+    }
+    return {
+      realLen: real0,
+      toSlide: function (r) { var g = find(r); return g.s0 + (r - g.r0) * g.rate; },
+      rateAt: function (r) { return find(r).rate; }
+    };
   }
 
   // ---- per-layer state at local time t (pure function of time, so seeking is free) ----
@@ -172,7 +205,7 @@
     this.loop = ds.loop !== 'false';
     this.autoplay = ds.autoplay || 'view';
     this.controls = ds.controls !== 'false';
-    this.speed = +ds.speed > 0 ? +ds.speed : 1;
+    this.speedParts = parseSpeed(ds.speed);
     this.t = 0; this.playing = false; this.visible = false; this.userPaused = false;
     this.reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var self = this;
@@ -247,8 +280,9 @@
     this.slides = datas.map(function (d) { var S = buildSlide(d); inner.appendChild(S.el); return S; });
     var acc = 0, n = this.slides.length;
     this.segs = this.slides.map(function (S, i) {
-      S.el.querySelectorAll('video').forEach(function (v) { v.defaultPlaybackRate = v.playbackRate = self.speed; });
-      var len = S.data.duration / self.speed + (i === n - 1 ? self.endHold : self.hold);
+      S.clock = makeClock(S.data.duration, self.speedParts);
+      S.videos = [].slice.call(S.el.querySelectorAll('video'));
+      var len = S.clock.realLen + (i === n - 1 ? self.endHold : self.hold);
       var seg = { S: S, start: acc, len: len };
       acc += len;
       return seg;
@@ -266,7 +300,7 @@
     this.render(true);
     if (!this.animated) return; // nothing to play
     if (this.reduced) {
-      this.seek(this.segs[0].S.data.duration / this.speed);
+      this.seek(this.segs[0].S.clock.realLen);
     } else if (this.autoplay === 'view' && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
@@ -384,8 +418,13 @@
       this.active = seg;
       resync = true;
     }
-    // player time is real ms; slide time runs `speed` times faster
-    applySlide(seg.S, Math.min((t - seg.start) * this.speed, seg.S.data.duration + 1), this.playing, resync);
+    // player time is real ms; each slide's clock maps it to (possibly sped-up) slide time
+    var real = t - seg.start, clock = seg.S.clock;
+    seg.S.videos.forEach(function (v) {
+      var rate = clock.rateAt(real);
+      if (v.playbackRate !== rate) v.defaultPlaybackRate = v.playbackRate = rate;
+    });
+    applySlide(seg.S, Math.min(clock.toSlide(Math.min(real, clock.realLen)), seg.S.data.duration + 1), this.playing, resync);
     if (this.fill) {
       var pct = t / this.total * 100;
       this.fill.style.width = pct + '%';
