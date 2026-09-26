@@ -29,7 +29,10 @@
   var registry = {};
   var waiting = {};
   var scriptEl = document.currentScript;
-  var base = scriptEl ? scriptEl.src.replace(/[^\/]*$/, '') : 'static/anim/';
+  var base = scriptEl ? scriptEl.src.replace(/[?#].*$/, '').replace(/[^\/]*$/, '') : 'static/anim/';
+  // pptanim.js?v=X passes X on to the slide data files so a new deploy isn't masked by caches
+  var ver = scriptEl && /[?&]v=([^&#]+)/.exec(scriptEl.src);
+  var query = ver ? '?v=' + ver[1] : '';
 
   function register(id, data) {
     registry[id] = data;
@@ -43,7 +46,7 @@
       if (!waiting[id]) {
         waiting[id] = [];
         var s = document.createElement('script');
-        s.src = base + 'slides/' + id + '.js';
+        s.src = base + 'slides/' + id + '.js' + query;
         s.onerror = function () { reject(new Error('pptanim: cannot load ' + s.src)); };
         document.head.appendChild(s);
       }
