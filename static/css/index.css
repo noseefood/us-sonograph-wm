@@ -457,8 +457,7 @@ summary:focus-visible,
 .accordion-body {
   padding: 0.2rem 1.2rem 1.3rem;
   line-height: 1.75;
-  text-align: justify;
-  hyphens: auto;
+  text-wrap: pretty;
 }
 
 
