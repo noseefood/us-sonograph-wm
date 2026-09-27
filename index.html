@@ -27,13 +27,13 @@
   <!-- Inter for the page, JetBrains Mono for BibTeX, Roboto for the slide animations -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <!-- ?v= busts browser/CDN caches (GitHub Pages caches 10 min): bump it whenever css/js/slides change -->
-  <link rel="stylesheet" href="static/css/bulma.min.css?v=20260927b">
-  <link rel="stylesheet" href="static/anim/pptanim.css?v=20260927b">
-  <link rel="stylesheet" href="static/css/index.css?v=20260927b">
+  <link rel="stylesheet" href="static/css/bulma.min.css?v=20260927d">
+  <link rel="stylesheet" href="static/anim/pptanim.css?v=20260927d">
+  <link rel="stylesheet" href="static/css/index.css?v=20260927d">
 
-  <script defer src="static/anim/pptanim.js?v=20260927b"></script>
-  <script defer src="static/js/copybutton.js?v=20260927b"></script>
-  <script defer src="static/js/nav.js?v=20260927b"></script>
+  <script defer src="static/anim/pptanim.js?v=20260927d"></script>
+  <script defer src="static/js/copybutton.js?v=20260927d"></script>
+  <script defer src="static/js/nav.js?v=20260927d"></script>
 </head>
 <body id="top">
 
@@ -50,6 +50,8 @@
     </div>
   </div>
 </nav>
+
+<main id="main">
 
 <!-- ============ Hero ============ -->
 <section class="hero publication-hero">
@@ -103,7 +105,7 @@
   <div class="container is-max-widescreen">
     <figure class="anim-figure">
       <div class="anim-card anim-wide">
-        <div class="ppt-anim" aria-label="From human scanning intuition to robotic ultrasound navigation" data-slides="slide01" data-crop="30,205,1220,430" data-speed="1.3" data-end-hold="5000"></div>
+        <div class="ppt-anim" style="--ar: 1220 / 430" aria-label="From human scanning intuition to robotic ultrasound navigation" data-slides="slide01" data-crop="30,205,1220,430" data-speed="1.3" data-end-hold="5000"></div>
       </div>
       <figcaption>
         A sonographer anticipates what the next view will show <em>before</em> moving the probe.
@@ -173,7 +175,7 @@
     <figure class="anim-figure">
       <h3 class="anim-title"><span class="step-no">1</span>Scene graphs capture anatomy, not image texture</h3>
       <div class="anim-card anim-wide">
-        <div class="ppt-anim" data-slides="slide02" data-crop="30,160,1220,520" data-speed="2@25%,1.5" data-end-hold="4000"></div>
+        <div class="ppt-anim" style="--ar: 1220 / 520" data-slides="slide02" data-crop="30,160,1220,520" data-speed="2@25%,1.5" data-end-hold="4000"></div>
       </div>
       <figcaption>
         Structures intersecting the imaging plane become nodes carrying component count, bounding box, centroid and
@@ -184,7 +186,7 @@
     <figure class="anim-figure">
       <h3 class="anim-title"><span class="step-no">2</span>Imagine. Execute one step. Replan.</h3>
       <div class="anim-card anim-wide">
-        <div class="ppt-anim"
+        <div class="ppt-anim" style="--ar: 1230 / 585"
              data-slides="slide04,slide05,slide06,slide07,slide08,slide09,slide10,slide11,slide12,slide13,slide14"
              data-crop="25,110,1230,585" data-hold="700" data-end-hold="4000"></div>
       </div>
@@ -210,12 +212,12 @@
       abdominal phantom. The planner receives only goal scene graphs, never goal poses.
     </p>
 
-    <div class="columns is-variable is-5 is-desktop pair-row">
+    <div class="columns is-variable is-5 pair-row">
       <div class="column">
         <figure class="anim-figure">
           <h3 class="anim-title">Robotic ultrasound platform</h3>
           <div class="anim-card">
-            <div class="ppt-anim" data-slides="slide16" data-crop="150,188,970,524" data-controls="false"></div>
+            <div class="ppt-anim" style="--ar: 970 / 524" data-slides="slide16" data-crop="150,188,970,524" data-controls="false"></div>
           </div>
         </figure>
       </div>
@@ -223,7 +225,7 @@
         <figure class="anim-figure">
           <h3 class="anim-title">The goal is a scene graph, not a probe pose</h3>
           <div class="anim-card">
-            <div class="ppt-anim" data-slides="slide17" data-crop="200,160,880,475" data-controls="false"></div>
+            <div class="ppt-anim" style="--ar: 880 / 475" data-slides="slide17" data-crop="200,160,880,475" data-controls="false"></div>
           </div>
         </figure>
       </div>
@@ -236,7 +238,7 @@
     <figure class="anim-figure">
       <h3 class="anim-title">Pancreas navigation on the phantom</h3>
       <div class="anim-card anim-wide">
-        <div class="ppt-anim" data-slides="slide18" data-crop="30,105,1220,585" data-end-hold="0"></div>
+        <div class="ppt-anim" style="--ar: 1220 / 585" data-slides="slide18" data-crop="30,105,1220,585" data-end-hold="0"></div>
       </div>
       <figcaption>
         One pancreas trial, all views synchronized: RViz, third-view camera, acquired B-mode, the registered label map
@@ -326,6 +328,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="site-footer">
   <a href="#top">Back to top &uarr;</a>
