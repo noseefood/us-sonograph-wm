@@ -218,6 +218,10 @@ summary:focus-visible,
   margin: 0 0.6em;
 }
 
+.equal-contribution-note {
+  display: block;
+}
+
 .publication-links {
   margin-top: 1.7rem;
 }
